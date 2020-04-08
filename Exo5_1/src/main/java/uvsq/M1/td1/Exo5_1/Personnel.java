@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 public final class Personnel implements  InterfacePersonne , Serializable{
-	
+	private static final long   serialVersionUID=1L;
 	private final String nom;	
 	private final String prenom;
 	private final List<ClasseTele> tel;

@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import org.junit.*;
-import java.util.ArrayList;
 
 public class TestSerialisation {
 	

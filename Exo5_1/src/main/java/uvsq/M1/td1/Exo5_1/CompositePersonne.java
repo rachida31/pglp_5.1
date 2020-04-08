@@ -49,6 +49,10 @@ public int size()
 {
 	return this.personnel.size();
 }
+public String getNomGroupe()
+{
+	return this.NomGroupe;
+}
 	public void remove(Personnel perso) {
 		if(this.personnel.contains(perso)) {
 			System.out.println(this.personnel.contains(perso));
