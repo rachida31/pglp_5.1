@@ -8,19 +8,13 @@ import java.time.LocalDate;
 import org.junit.*;
 
 public class TestSerialisation {
-	
-	
-	
-	
-	private Fonction fonc;
-	private Telephone tel;
 	private Personnel  personnel;
 @Before()
 public void setUp() {
 
-	personnel=(new PersonnelBuilder("aissou", "rachel", fonc.directeur).
+	personnel=(new PersonnelBuilder("aissou", "rachel", Fonction.directeur).
 date(LocalDate.parse("2011-12-01")).
-addNumeroTelephone(new ClasseTele(tel.fixePro,"06 89 51 12 53")).build());
+addNumeroTelephone(new ClasseTele(Telephone.fixePro,"06 89 51 12 53")).build());
 
 }
 @Test

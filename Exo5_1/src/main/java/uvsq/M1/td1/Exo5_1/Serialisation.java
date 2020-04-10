@@ -8,14 +8,23 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+
+/**
+ *implemantation de la classe abstract Serialisation .
+ * @author rachida ouchene.
+ * 
+ */
 public abstract class Serialisation<T extends Serializable> {
 
-	public void write(String string) {
-			System.out.println(LocalDateTime.now() + " :  " + string);
-		}
+	
 		
-
+	/**
+     * Elle permet d'ecrire d'un fichier l'objet passer en parametre si tout est bien passé l'objet saura ecrit ensuite
+     * le fichier saura fermé sinon une exception se generera.
+     * @param obj
+     * L'objet à ecrire qu'est de type Personnel ou de tye CompositePersonnel .
+     *@exception IOException  
+     */
 		public void writeFile(T obj, String filename) {
 			ObjectOutputStream	oos = null;
 			try {
@@ -23,16 +32,22 @@ public abstract class Serialisation<T extends Serializable> {
 			      oos = new ObjectOutputStream(fichier);
 
 				oos.writeObject(obj);
-				write("Objet " + obj.getClass() + " est créé!");
 				oos.flush();
 
 			} catch (IOException e) {
-				write(e.getMessage());
+				System.out.println(e.getMessage());
 			}finally 
 			{
 				closeFile(oos);
 			}
 		}
+		/**
+	     * Elle permet de fermer un fichier si toutes est bien passe le fichier saura 
+	     * fermer sinon un exception se generera.
+	     * @param oos
+	     * est le flux de fichier a fermer.
+	     * @exception IOException.
+	     */
 		public void closeFile(ObjectOutputStream oos) {
 			try {
 		        if (oos != null) {
@@ -43,56 +58,91 @@ public abstract class Serialisation<T extends Serializable> {
 		        ex.printStackTrace();
 		      }}
 		
-		
-		public void deleteFile(String filename) {
+		/**
+	     * Elle permit de supprimer un fichier si il existe sinon une exception 
+	     * est géneré .
+	     * @param filename
+	     * Le nom de fichier que on veut supprimer .
+	     *@exception InExistFille
+	     *
+	     */
+		public void deleteFile(String filename) throws InExistFille {
 			File file = new File(filename); 
 			if(exists(filename)) {
-	        if(file.delete()) write("Objet supprimé!"); 
-	        else write("Suppression impossible");
+	        if(file.delete()) System.out.println("Objet supprimé!"); 
+	        else throw new InExistFille();
 		}else
 		{
-		write("Le fichier n\'existe pas");
-
+			throw new InExistFille();
 			}
 		}
-		
+		/**
+	     * Retourne un boolean 1 si le fichier existe 0 sinon .
+	     * 
+	     * @param filename le nom de fichier que on verifier si il existe ou non.
+	     */
 		private boolean exists(String filename) {
 			File file = new File(filename); 
 	        return file.exists();
 		}
-		
-		public T findFile(String filename) {
+		/**
+	     * Elle lit le contenue d'un fichier en suite renvoit cette objet lu qu'est de 
+	     * type Personnel ou de type CompositePersonnel si tous est bien sinon elle 
+	     * genere une exception .
+	     * @exception ClassNotFoundException
+	     * @exception IOException
+	     * @param filename
+	     * Le nom de fichier que on va lire.
+	     * @return obj qu'est l'Objet lu .
+	     * 
+	     * @see type
+	     */
+		public T readFile(String filename) {
 			ObjectInputStream in =null;
+System.out.println(filename);
 			try {
 				in=new ObjectInputStream(
 					new BufferedInputStream(new FileInputStream(filename)));
-				T obj = (T) in.readObject();
-				write("Objet " + obj.getClass() + " est lu!");
-				return obj;
+				return  (T) in.readObject();
 			} catch (ClassNotFoundException | IOException e) {
-				write(e.getMessage());
+				System.out.println(e.getMessage());
 				return null;
 			}
 		}
-		
-		public T createFile(T obj, String filename) {
+		/**
+	     * Elle permit de crer un fichier puis appler pa fonction writeFile pour ecrire le contenue de 
+	     * obj dans le fichier .
+	     * @param obj
+	     *  est un objet de type Personnel ou CompisitePersonnel.
+	     * @param filename
+	     * Le nom de fichier a cree.
+	     */
+		public void  createFile(T obj, String filename) {
 			if (exists(filename)) {
-				write("Création impossible");
-				return null;
+				System.out.println("Création impossible");
 			}
 			else {
 				writeFile(obj, filename);
-				return obj;
 			}
 		}
-		
-		public void  updateFile(T obj, String filename,String s1) {
-			if (!exists(filename)) {
-				write("Mise à jour impossible");
-			}
+		/**
+	     * elle permet de modifier un fichier si le fichier n'existe pas
+	     *  elle genere une excepetion de type InExistFille qui est definie.
+	     * @param obj 
+	     * est un objet soit de type Personnel soit de type compositePersonnel.
+	     * @param filename 
+	     * Le nom de fichier que on generer un nouveau .
+	     * @param file 
+	     * Le nom de fichier que on veut modifier.
+	     * @exception InExistFille.
+	     */
+		public void  updateFile(T obj, String filename,String file) throws InExistFille {
+			if (!exists(file)) {
+				throw new 	InExistFille();
+				}
 			else {
-				deleteFile(filename);
-				writeFile(obj, s1);
+				deleteFile(file);
+				writeFile(obj,filename);
 		
 		
 			}}

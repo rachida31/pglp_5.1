@@ -8,28 +8,23 @@ import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 public class TestSerialisationComp {
-
-	
 	private  ArrayList<InterfacePersonne> personnel ;
-	private Fonction fonc;
-	private Telephone tel;
 	private CompositePersonne perso;
 	private Personnel  p1;
-	private AfficheIterator iter;
 @Before()
 public void setUp() {
 	this.personnel=new ArrayList<InterfacePersonne>();
 
-p1=(new PersonnelBuilder("aissou", "rachel", fonc.directeur).
+p1=(new PersonnelBuilder("aissou", "rachel", Fonction.directeur).
 date(LocalDate.parse("2011-12-01")).
-addNumeroTelephone(new ClasseTele(tel.fixePro,"06 89 51 12 53")).build());
+addNumeroTelephone(new ClasseTele(Telephone.fixePro,"06 89 51 12 53")).build());
 personnel.add(p1);
-	personnel.add(new PersonnelBuilder("aissou", "aylan", fonc.chargeMission).
+	personnel.add(new PersonnelBuilder("aissou", "aylan", Fonction.chargeMission).
 date(LocalDate.parse("2014-11-01")).
-addNumeroTelephone(new ClasseTele(tel.portable,"06 89 51 12 53")).build());
-	personnel.add(new PersonnelBuilder("aissou", "silas", fonc.chargeMission).
+addNumeroTelephone(new ClasseTele(Telephone.portable,"06 89 51 12 53")).build());
+	personnel.add(new PersonnelBuilder("aissou", "silas", Fonction.chargeMission).
 date(LocalDate.parse("2019-07-01")).
-addNumeroTelephone(new ClasseTele(tel.fixePerso,"06 89 51 12 53")).build());
+addNumeroTelephone(new ClasseTele(Telephone.fixePerso,"06 89 51 12 53")).build());
 	perso=new CompositePersonne(personnel,"comptabilité");
 
 }

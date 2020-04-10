@@ -3,45 +3,45 @@ package uvsq.M1.td1.Exo5_1;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.ArrayList;
 
-import uvsq.M1.td1.Exo5_1.Personnel.PersonnelBuilder;
 
+/**
+ *implemantation de la classe PersonnelDAO 
+ *pour la dao d'un personnel.
+ * @author rachida ouchene.
+ * 
+ */
 public class PersonnelDAO  <T extends Serializable> extends Serialisation<Personnel>  implements DAO<Personnel>{
-
-	
-	
-
-	
-	
-	
-	public void save(Personnel obj,String s) {
-		 writeFile(obj,s );
+	/**
+     * Elle permit de crer un objet Personnel.
+     */
+	public void create(Personnel obj) {
+		 writeFile(obj,obj.getNom()+".personnel" );
 	}
-
-	public void update(Personnel obj,String s,String s1) {
-		updateFile(obj, s,s1);
+	/**
+     * Metre à jour les informations d'un Personnel.
+     *      
+     */
+	public void update(Personnel obj,String file) throws InExistFille {
+		updateFile(obj,obj.getNom()+".personnel",file);
 
 	}
+	/**
+     * Supprime un Personnel.
+     */
+	public void delete(Personnel obj) throws InExistFille {
 
-	public void delete(Personnel obj,String s) {
-
-		deleteFile(s);
+		deleteFile(obj.getNom()+".personnel");
 	}
-
+	/**
+     * Retourne l'objet Personnel qu'est lu.
+     */
 	@Override
-	public Personnel find(String s) throws FileNotFoundException, ClassNotFoundException, IOException {
-		// TODO Auto-generated method stub
-		return findFile(s);
+	public Personnel read(String s) throws FileNotFoundException, ClassNotFoundException, IOException {
+		return readFile(s);
 	}
 
-	@Override
-	public ArrayList<Personnel> findAll() throws FileNotFoundException, ClassNotFoundException, IOException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	
 
 }
